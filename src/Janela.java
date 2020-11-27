@@ -1,3 +1,4 @@
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -48,6 +49,10 @@ public class Janela {
     public Node getRoot(){
 
         root = new GridPane();
+
+        root.setPadding(new Insets(10));
+        root.setHgap(5);
+        root.setVgap(10);
 
         lbNome = new Label("Nome:");
         tfNome = new TextField();
@@ -121,7 +126,7 @@ public class Janela {
         btLimpar = new Button("Limpar");
 
         HBox boxBotoes = new HBox(btSalvar,btLimpar);
-
+        boxBotoes.setSpacing(5);
         root.add(boxBotoes,3,11);
 
         areaInfos = new TextArea();
