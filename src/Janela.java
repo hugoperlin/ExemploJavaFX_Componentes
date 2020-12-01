@@ -26,7 +26,10 @@ public class Janela {
     private ComboBox<Integer> cbAnoEntrada;
 
     private Label lbJogos;
-    private CheckBox[] chkJogos;
+    private CheckBox chkLol;
+    private CheckBox chkFortnite;
+    private CheckBox chkCod;
+    private CheckBox chkBF;
 
     private Label lbEhDoador;
     private RadioButton rbEhDoadorSim;
@@ -42,7 +45,6 @@ public class Janela {
 
     public Janela(Cadastro cadastro){
         this.cadastro = cadastro;
-        this.chkJogos = new CheckBox[Cadastro.NOMES_JOGOS.length];
     }
 
 
@@ -51,21 +53,22 @@ public class Janela {
         root = new GridPane();
 
         root.setPadding(new Insets(10));
-        root.setHgap(5);
         root.setVgap(10);
 
-        lbNome = new Label("Nome:");
+        lbNome = new Label("_Nome:");
         tfNome = new TextField();
         lbNome.setLabelFor(tfNome);
+        lbNome.setMnemonicParsing(true);
 
         root.add(lbNome,0,0);
         root.add(tfNome,1,0,3,1);
 
 
 
-        lbEmail = new Label("Email");
+        lbEmail = new Label("_Email");
         tfEmail = new TextField();
         lbEmail.setLabelFor(tfEmail);
+        lbEmail.setMnemonicParsing(true);
 
         root.add(lbEmail,0,1);
         root.add(tfEmail,1,1,3,1);
@@ -93,17 +96,17 @@ public class Janela {
         root.add(lbAnoEntrada,2,2);
         root.add(cbAnoEntrada,3,2);
 
-
         lbJogos = new Label("Jogos:");
+        chkLol = new CheckBox("LoL");
+        chkBF = new CheckBox("Battle Field");
+        chkCod = new CheckBox("Call of Duty");
+        chkFortnite = new CheckBox("Fortnite");
+
         root.add(lbJogos,0,3);
-
-
-
-
-        for(int i=0;i<Cadastro.NOMES_JOGOS.length;i++){
-            chkJogos[i] = new CheckBox(Cadastro.NOMES_JOGOS[i]);
-            root.add(chkJogos[i],1,i+4);
-        }
+        root.add(chkLol,0,4);
+        root.add(chkBF,1,4);
+        root.add(chkCod,0,5);
+        root.add(chkFortnite,1,5);
 
         lbEhDoador = new Label("Doador de órgãos:");
         rbEhDoadorSim = new RadioButton("Sim");
@@ -113,9 +116,9 @@ public class Janela {
         rbEhDoadorNao.setToggleGroup(grpDoador);
         rbEhDoadorSim.setToggleGroup(grpDoador);
 
-        root.add(lbEhDoador,0,10);
-        root.add(rbEhDoadorSim,1,10);
-        root.add(rbEhDoadorNao,2,10);
+        root.add(lbEhDoador,0,6);
+        root.add(rbEhDoadorSim,1,6);
+        root.add(rbEhDoadorNao,2,6);
 
         btSalvar = new Button("Adicionar");
         btSalvar.setOnAction((evt)->{
@@ -124,15 +127,18 @@ public class Janela {
 
 
         btLimpar = new Button("Limpar");
+        btLimpar.setOnAction((evt)->{
+            limpar();
+        });
 
         HBox boxBotoes = new HBox(btSalvar,btLimpar);
         boxBotoes.setSpacing(5);
-        root.add(boxBotoes,3,11);
+        root.add(boxBotoes,3,7);
 
         areaInfos = new TextArea();
         areaInfos.setEditable(false);
 
-        root.add(areaInfos,0,12,4,1);
+        root.add(areaInfos,0,8,4,1);
 
         return root;
     }
@@ -143,13 +149,25 @@ public class Janela {
         String email = tfEmail.getText();
         int anoNascimento = cbAnoNascimento.getValue();
         int anoEntrada = cbAnoEntrada.getValue();
+
         boolean ehDoador = rbEhDoadorSim.isSelected();
+
         ArrayList<String> jogos = new ArrayList<>();
 
-        for(int i=0;i<chkJogos.length;i++){
-            if(chkJogos[i].isSelected()){
-                jogos.add(chkJogos[i].getText());
-            }
+        if(chkCod.isSelected()){
+            jogos.add(chkCod.getText());
+        }
+
+        if(chkFortnite.isSelected()){
+            jogos.add(chkFortnite.getText());
+        }
+
+        if(chkBF.isSelected()){
+            jogos.add(chkBF.getText());
+        }
+
+        if(chkLol.isSelected()){
+            jogos.add(chkLol.getText());
         }
 
         boolean ret = cadastro.adicionaPessoa(nome,email,anoNascimento,anoEntrada,jogos,ehDoador);
@@ -172,9 +190,10 @@ public class Janela {
         cbAnoNascimento.getSelectionModel().clearSelection();
         rbEhDoadorSim.setSelected(false);
         rbEhDoadorNao.setSelected(false);
-        for(int i=0;i<chkJogos.length;i++){
-            chkJogos[i].setSelected(false);
-        }
+        chkLol.setSelected(false);
+        chkBF.setSelected(false);
+        chkFortnite.setSelected(false);
+        chkCod.setSelected(false);
 
 
     }

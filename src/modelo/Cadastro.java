@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Cadastro {
 
-    public static final String[] NOMES_JOGOS = {"LoL","Battle Field","Call of Duty","Fortnite"};
-
 
     private ArrayList<Pessoa> cadastro;
 
