@@ -69,8 +69,5 @@ public class Pessoa {
         this.doadorOrgaos = doadorOrgaos;
     }
 
-    @Override
-    public String toString() {
-        return this.nome;
-    }
+
 }

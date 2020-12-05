@@ -3,6 +3,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import modelo.Cadastro;
 import modelo.Pessoa;
 
@@ -140,7 +141,24 @@ public class Janela {
 
         lstPessoas = new ListView<>();
 
-        
+        lstPessoas.setCellFactory(new Callback<ListView<Pessoa>, ListCell<Pessoa>>() {
+            @Override
+            public ListCell<Pessoa> call(ListView<Pessoa> pessoaListView) {
+                return new ListCell<>(){
+                    @Override
+                    protected void updateItem(Pessoa pessoa, boolean b) {
+                        super.updateItem(pessoa, b);
+
+                        if(pessoa != null){
+                            setText(pessoa.getEmail());
+                        }else{
+                            setText("");
+                        }
+
+                    }
+                };
+            }
+        });
 
 
         lstPessoas.setOnMouseClicked((evt)->{
