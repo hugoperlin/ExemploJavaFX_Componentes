@@ -71,13 +71,6 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Pessoa{" +
-                "nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", anoNascimento=" + anoNascimento +
-                ", anoEntrada=" + anoEntrada +
-                ", jogos=" + jogos +
-                ", doadorOrgaos=" + doadorOrgaos +
-                '}';
+        return this.nome;
     }
 }

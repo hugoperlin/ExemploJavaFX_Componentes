@@ -38,6 +38,8 @@ public class Janela {
     private Button btSalvar;
     private Button btLimpar;
 
+
+    private ListView<Pessoa> lstPessoas;
     private TextArea areaInfos;
 
 
@@ -62,7 +64,6 @@ public class Janela {
 
         root.add(lbNome,0,0);
         root.add(tfNome,1,0,3,1);
-
 
 
         lbEmail = new Label("_Email");
@@ -135,10 +136,27 @@ public class Janela {
         boxBotoes.setSpacing(5);
         root.add(boxBotoes,3,7);
 
+
+
+        lstPessoas = new ListView<>();
+
+        
+
+
+        lstPessoas.setOnMouseClicked((evt)->{
+            atualizaAreaInfos();
+        });
+
         areaInfos = new TextArea();
         areaInfos.setEditable(false);
 
-        root.add(areaInfos,0,8,4,1);
+        HBox boxInfos = new HBox();
+        boxInfos.setSpacing(5);
+        boxInfos.getChildren().add(lstPessoas);
+        boxInfos.getChildren().add(areaInfos);
+
+
+        root.add(boxInfos,0,8,4,1);
 
         return root;
     }
@@ -175,7 +193,7 @@ public class Janela {
         if(ret){
             Alert alert = new Alert(Alert.AlertType.INFORMATION,"Pessoa salva!!");
             alert.showAndWait();
-            atualizaAreaInfos();
+            atualizaListaPessoas();
             limpar();
 
         }
@@ -198,20 +216,36 @@ public class Janela {
 
     }
 
-    private void atualizaAreaInfos() {
 
+    private void atualizaListaPessoas(){
         List<Pessoa> lista = cadastro.getLista();
-        String infos = "";
 
-
-
-        areaInfos.clear();
-
+        lstPessoas.getItems().clear();
         for(Pessoa p:lista){
-            infos += p.toString() +"\n";
+            lstPessoas.getItems().add(p);
         }
 
-        areaInfos.setText(infos);
+    }
+
+
+    private void atualizaAreaInfos() {
+
+        Pessoa p = lstPessoas.getSelectionModel().getSelectedItem();
+
+        if(p != null){
+            String str = "";
+
+            str += "Nome: "+p.getNome()+"\n";
+            str += "E-mail: "+p.getEmail()+"\n";
+            str += "Ano de Entrada: "+p.getAnoEntrada()+"\n";
+            str += "Ano de Nascimento: "+p.getAnoNascimento()+"\n";
+            str += "Doador de orgãos?: "+(p.isDoadorOrgaos()?"Sim":"Não")+"\n";
+            str += "Jogos:"+ p.getJogos();
+
+
+            areaInfos.clear();
+            areaInfos.setText(str);
+        }
 
     }
 
